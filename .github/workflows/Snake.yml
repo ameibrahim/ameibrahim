@@ -1,11 +1,12 @@
-name: Generate Snake
+name: Snake to Pages
 
 on:
     workflow_dispatch:
     schedule:
-        - cron: "0 0 * * *" # daily
-    push:
-        branches: [main]
+        - cron: "0 0 * * *" # run daily at 00:00 UTC
+
+permissions:
+    contents: write # needed to push to gh-pages
 
 jobs:
     build:
@@ -17,15 +18,17 @@ jobs:
             - name: Generate snake
               uses: Platane/snk@v3
               with:
-                  # Use the repo owner, or hardcode "ameibrahim"
-                  github_user_name: ${{ github.repository_owner }}
+                  github_user_name: "ameibrahim"
                   outputs: |
                       dist/github-snake.svg
                       dist/github-snake-dark.svg?palette=github-dark
                       dist/ocean.gif?color_snake=orange&color_dots=#bfd6f6,#8dbdff,#64a1f4,#4b91f1,#3c7dd9
 
-            - name: Upload artifact
-              uses: actions/upload-artifact@v4
+            - name: Deploy to gh-pages
+              uses: crazy-max/ghaction-github-pages@v4
               with:
-                  name: snake-outputs
-                  path: dist
+                  target_branch: gh-pages
+                  build_dir: dist
+                  commit_message: "chore: update snake"
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
