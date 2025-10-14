@@ -1,34 +1,38 @@
-name: Snake to Pages
+name: Snake to Repo
 
 on:
-    workflow_dispatch:
-    schedule:
-        - cron: "0 0 * * *" # run daily at 00:00 UTC
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *" # daily at 00:00 UTC
 
 permissions:
-    contents: write # needed to push to gh-pages
+  contents: write  # allow pushing commits
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # safer for committing
 
-            - name: Generate snake
-              uses: Platane/snk@v3
-              with:
-                  github_user_name: "ameibrahim"
-                  outputs: |
-                      dist/github-snake.svg
-                      dist/github-snake-dark.svg?palette=github-dark
-                      dist/ocean.gif?color_snake=orange&color_dots=#bfd6f6,#8dbdff,#64a1f4,#4b91f1,#3c7dd9
+      - name: Generate snake
+        uses: Platane/snk@v3
+        with:
+          github_user_name: "ameibrahim"
+          outputs: |
+            dist/github-snake.svg
+            dist/github-snake-dark.svg?palette=github-dark
+            dist/ocean.gif?color_snake=orange&color_dots=#bfd6f6,#8dbdff,#64a1f4,#4b91f1,#3c7dd9
 
-            - name: Deploy to gh-pages
-              uses: crazy-max/ghaction-github-pages@v4
-              with:
-                  target_branch: gh-pages
-                  build_dir: dist
-                  commit_message: "chore: update snake"
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Move files into repo assets
+        run: |
+          mkdir -p assets/snake
+          cp -f dist/* assets/snake/
+
+      - name: Commit and push
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(snake): update assets"
+          file_pattern: assets/snake/*
