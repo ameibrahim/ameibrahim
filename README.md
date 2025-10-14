@@ -11,3 +11,6 @@
   <source media="(prefers-color-scheme: dark)" srcset="./assets/snake/github-snake-dark.svg" />
   <img alt="GitHub Snake" src="./assets/snake/github-snake.svg" />
 </picture>
+
+<!--STARTS_HERE_QUOTE_README-->
+<!--ENDS_HERE_QUOTE_README-->
