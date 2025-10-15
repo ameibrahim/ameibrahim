@@ -12,5 +12,11 @@
   <img alt="GitHub Snake" src="./assets/snake/github-snake.svg" />
 </picture>
 
+<p align="center">
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=git,kubernetes,docker,anaconda,androidstudio,apple,bun,css,cypress,jest,fastapi,firebase,github,html,js,nextjs,nginx,notion,postgres,prisma,py,rust,sublime,sklearn,swift,tailwind,tensorflow,ts,vscode&perline=5" />
+  </a>
+</p>
+
 <!--STARTS_HERE_QUOTE_README-->
 <!--ENDS_HERE_QUOTE_README-->
