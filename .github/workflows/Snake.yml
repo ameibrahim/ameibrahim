@@ -3,7 +3,7 @@ name: Snake to Repo
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *" # daily at 00:00 UTC
+    - cron: "0 0 * * 0" # daily at 00:00 UTC
 
 permissions:
   contents: write  # allow pushing commits
